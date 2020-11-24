@@ -3,7 +3,7 @@ USE IEEE.STD_LOGIC_1164.ALL;
 USE IEEE.STD_LOGIC_ARITH.ALL;
 USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 
-ENTITY bat_n_ball IS
+ENTITY bat_n_ball IS -- bat is the bird, ball is the hole in the pipe
     PORT (
         v_sync : IN STD_LOGIC;
         pixel_row : IN STD_LOGIC_VECTOR(10 DOWNTO 0);
@@ -40,6 +40,7 @@ BEGIN
     -- set ball_on if current pixel address is covered by ball position
     balldraw : PROCESS (ball_x, ball_y, pixel_row, pixel_col) IS
         VARIABLE vx, vy : STD_LOGIC_VECTOR (10 DOWNTO 0); -- 9 downto 0
+    --Becomes draw code    
     BEGIN
         IF pixel_col <= ball_x THEN -- vx = |ball_x - pixel_col|
             vx := ball_x - pixel_col;
@@ -61,6 +62,8 @@ BEGIN
     -- set bat_on if current pixel address is covered by bat position
     batdraw : PROCESS (bat_x, pixel_row, pixel_col) IS
         VARIABLE vx, vy : STD_LOGIC_VECTOR (10 DOWNTO 0); -- 9 downto 0
+
+    --flip x and y
     BEGIN
         IF ((pixel_col >= bat_x - bat_w) OR (bat_x <= bat_w)) AND
          pixel_col <= bat_x + bat_w AND
